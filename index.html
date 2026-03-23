@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NexGen Counsel - Premium JEE College Predictor</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #6366f1;
+            --primary-glow: rgba(99, 102, 241, 0.4);
+            --secondary: #a855f7;
+            --accent: #f43f5e;
+            --bg-dark: #0f172a;
+            --card-bg: rgba(255, 255, 255, 0.05);
+            --border: rgba(255, 255, 255, 0.1);
+            --text-main: #f8fafc;
+            --text-dim: #94a3b8;
+            --success: #10b981;
+            --warning: #f59e0b;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Outfit', sans-serif; }
+        body { background-color: var(--bg-dark); color: var(--text-main); overflow-x: hidden; min-height: 100vh; }
+
+        /* Background Blobs */
+        .background-blobs { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; filter: blur(100px); }
+        .blob { position: absolute; border-radius: 50%; opacity: 0.4; animation: move 20s infinite alternate; }
+        .blob-1 { width: 400px; height: 400px; background: var(--primary); top: -100px; left: -100px; }
+        .blob-2 { width: 350px; height: 350px; background: var(--secondary); bottom: 10%; right: 5%; animation-delay: -5s; }
+        .blob-3 { width: 250px; height: 250px; background: var(--accent); bottom: -50px; left: 30%; animation-delay: -10s; }
+        @keyframes move { from { transform: translate(0, 0) scale(1); } to { transform: translate(60px, 60px) scale(1.1); } }
+
+        nav { padding: 2rem 5%; display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-size: 1.8rem; font-weight: 800; letter-spacing: -1px; }
+        .logo span { color: var(--primary); }
+
+        main { max-width: 1100px; margin: 0 auto; padding: 1rem 5%; }
+        .hero-text { text-align: center; margin-bottom: 2.5rem; animation: fadeIn 1s ease-out; }
+        .hero-text h1 { font-size: 3.5rem; font-weight: 800; line-height: 1.1; margin-bottom: 0.5rem; }
+        .hero-text h1 span { background: linear-gradient(to right, #6366f1, #a855f7); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .hero-text p { color: var(--text-dim); font-size: 1.1rem; }
+
+        .glass-card {
+            background: var(--card-bg); backdrop-filter: blur(25px); border: 1px solid var(--border);
+            border-radius: 28px; padding: 2.5rem; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        }
+
+        .form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; margin-bottom: 2rem; }
+        .input-group { display: flex; flex-direction: column; gap: 0.5rem; }
+        .input-group label { font-size: 0.9rem; font-weight: 600; color: var(--text-dim); margin-left: 4px; }
+
+        input, select {
+            background: rgba(255, 255, 255, 0.05); border: 1px solid var(--border);
+            border-radius: 14px; padding: 0.9rem 1.2rem; color: white; font-size: 1rem;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        input:focus, select:focus { outline: none; border-color: var(--primary); background: rgba(255, 255, 255, 0.08); box-shadow: 0 0 0 4px var(--primary-glow); }
+
+        .checkbox-container { display: flex; align-items: center; gap: 10px; margin: 10px 0; cursor: pointer; }
+        .checkbox-container input { width: 1.2rem; height: 1.2rem; cursor: pointer; }
+
+        .btn-primary {
+            width: 100%; background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white; border: none; padding: 1.2rem; border-radius: 18px;
+            font-size: 1.2rem; font-weight: 800; cursor: pointer;
+            transition: transform 0.3s, filter 0.3s, box-shadow 0.3s;
+            text-transform: uppercase; letter-spacing: 1px;
+            box-shadow: 0 10px 20px -5px var(--primary-glow);
+        }
+        .btn-primary:hover { transform: translateY(-3px); filter: brightness(1.1); box-shadow: 0 15px 30px -5px var(--primary-glow); }
+
+        .step-container { display: none; opacity: 0; transform: translateY(30px); }
+        .step-container.active { display: block; animation: slideUp 0.7s forwards; }
+        @keyframes slideUp { to { opacity: 1; transform: translateY(0); } }
+
+        /* Results & Comparison */
+        .results-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 2.5rem; }
+        .btn-text { background: none; border: none; color: var(--text-dim); cursor: pointer; font-weight: 600; font-size: 1rem; }
+        .btn-text:hover { color: white; }
+
+        .probability-cards { display: flex; gap: 1.5rem; margin-bottom: 2.5rem; flex-wrap: wrap; }
+        .prob-card { 
+            flex: 1; min-width: 250px; padding: 2rem; border-radius: 24px; text-align: center;
+            background: rgba(255, 255, 255, 0.03); border: 1px solid var(--border);
+        }
+        .prob-card h4 { color: var(--text-dim); font-size: 0.9rem; text-transform: uppercase; margin-bottom: 1rem; letter-spacing: 1px; }
+        .prob-card h3 { font-size: 1.5rem; margin-bottom: 1rem; }
+        .prob-circle { 
+            width: 90px; height: 90px; border-radius: 50%; border: 6px solid var(--border);
+            display: flex; align-items: center; justify-content: center; margin: 0 auto;
+            font-size: 1.6rem; font-weight: 800; position: relative;
+        }
+        .prob-circle.high { border-color: var(--success); color: var(--success); }
+        .prob-circle.med { border-color: var(--warning); color: var(--warning); }
+        .prob-circle.low { border-color: var(--accent); color: var(--accent); }
+
+        .comparison-table-wrapper { overflow-x: auto; margin-bottom: 2.5rem; border-radius: 16px; border: 1px solid var(--border); }
+        .comparison-table { width: 100%; border-collapse: collapse; text-align: left; background: rgba(255, 255, 255, 0.02); }
+        .comparison-table th, .comparison-table td { padding: 1.2rem; border-bottom: 1px solid var(--border); }
+        .comparison-table th { background: rgba(255, 255, 255, 0.05); font-weight: 700; color: var(--primary); }
+        .comparison-table tr:last-child td { border-bottom: none; }
+        .comparison-table .feature { font-weight: 600; background: rgba(255, 255, 255, 0.03); width: 25%; }
+
+        .recommendations-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 1.5rem; }
+        .college-card { 
+            background: var(--card-bg); border: 1px solid var(--border); border-radius: 22px;
+            padding: 1.8rem; transition: all 0.3s; position: relative; overflow: hidden;
+        }
+        .college-card:hover { transform: translateY(-8px); border-color: var(--primary); background: rgba(255, 255, 255, 0.08); }
+        .badge { position: absolute; top: 1.2rem; right: 1.2rem; padding: 0.4rem 0.9rem; border-radius: 20px; font-size: 0.75rem; font-weight: 800; text-transform: uppercase; }
+        .badge-iit { background: linear-gradient(135deg, #ef4444, #b91c1c); }
+        .badge-nit { background: linear-gradient(135deg, #3b82f6, #1d4ed8); }
+        .badge-iiit { background: linear-gradient(135deg, #10b981, #047857); }
+
+        .advantage-pill { 
+            background: rgba(99, 102, 241, 0.1); color: var(--primary); padding: 0.3rem 0.8rem;
+            border-radius: 10px; font-size: 0.8rem; font-weight: 700; display: inline-block; margin: 0.2rem;
+        }
+
+        .spinner { width: 60px; height: 60px; border: 6px solid rgba(255, 255, 255, 0.1); border-top-color: var(--primary); border-radius: 50%; animation: spin 1s infinite cubic-bezier(0, 0, 0.2, 1); margin: 4rem auto 1rem; }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        .hidden { display: none !important; }
+        @media (max-width: 768px) { .hero-text h1 { font-size: 2.5rem; } .prob-card { min-width: 100%; } .comparison-table .feature { width: 40%; } }
+    </style>
+</head>
+<body>
+    <div class="background-blobs">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
+    </div>
+
+    <nav>
+        <div class="logo">NexGen <span>Counsel</span></div>
+    </nav>
+
+    <main id="app-container">
+        <!-- Input Step -->
+        <section id="input-step" class="step-container active">
+            <div class="hero-text">
+                <h1>Find Your <span>Dream College</span></h1>
+                <p>AI-powered recommendation with selection probability and detailed comparisons.</p>
+            </div>
+
+            <form id="counsel-form" class="glass-card">
+                <div class="form-grid">
+                    <div class="input-group">
+                        <label for="percentile">JEE Mains Percentile</label>
+                        <input type="number" id="percentile" step="0.0001" min="0" max="100" placeholder="e.g. 99.82" required>
+                    </div>
+
+                    <div class="input-group">
+                        <label>Cleared JEE Advanced?</label>
+                        <div class="checkbox-container" id="adv-toggle">
+                            <input type="checkbox" id="adv_cleared" checked>
+                            <span>I successfully cleared Advanced</span>
+                        </div>
+                    </div>
+
+                    <div class="input-group" id="rank-input-div">
+                        <label for="rank">JEE Advanced Rank</label>
+                        <input type="number" id="rank" placeholder="e.g. 1500">
+                    </div>
+
+                    <div class="input-group">
+                        <label for="interested_field">Interested Field</label>
+                        <select id="interested_field" required>
+                            <option value="">Select Specialization</option>
+                            <option value="CSE">Computer Science (CSE / AI / DS)</option>
+                            <option value="IT">Information Technology (IT / Software)</option>
+                            <option value="ECE">Electronics (ECE / ENTC)</option>
+                            <option value="Electrical">Electrical (EEE)</option>
+                            <option value="Mechanical">Mechanical / Aerospace</option>
+                            <option value="Civil">Civil / Architecture / Environmental</option>
+                            <option value="Chemical">Chemical / Bio-Technology</option>
+                            <option value="Production">Production / Industrial / Mining</option>
+                        </select>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="hobbies">Hobbies / Interests</label>
+                        <input type="text" id="hobbies" placeholder="e.g. Coding, Robotics, Sports, Music">
+                    </div>
+
+                    <div class="input-group">
+                        <label for="desired_college">Desired College (Wishlist)</label>
+                        <input type="text" id="desired_college" placeholder="e.g. IIT Bombay">
+                    </div>
+                </div>
+
+                <button type="submit" class="btn-primary">Generate Counseling Report</button>
+            </form>
+        </section>
+
+        <!-- Results Step -->
+        <section id="results-step" class="step-container">
+            <div class="results-header">
+                <button id="back-btn" class="btn-text">← Adjust Parameters</button>
+                <h2>Your AI Strategy Report</h2>
+            </div>
+            
+            <div id="loading" class="hidden">
+                <div class="spinner"></div>
+                <p style="text-align: center; color: var(--text-dim);">Running probabilistic simulations...</p>
+            </div>
+
+            <div id="results-content">
+                <div class="probability-cards" id="prob-container">
+                    <!-- Probability cards injected here -->
+                </div>
+
+                <div id="comparison-section">
+                    <h3 style="margin-bottom: 1.5rem; font-weight: 800;">🔍 Detailed Comparison</h3>
+                    <div class="comparison-table-wrapper">
+                        <table class="comparison-table" id="comp-table">
+                            <!-- Table rows injected here -->
+                        </table>
+                    </div>
+                </div>
+
+                <h3 style="margin-bottom: 1.5rem; font-weight: 800;">Recommended Alternatives</h3>
+                <div class="recommendations-grid" id="rec-list"></div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        const COLLEGES = [
+            { name: "IIT Bombay", type: "IIT", percentile: 99.98, rank: 50, avgPkg: "26.5 LPA", placement: 99, reputation: "10/10", fields: ["CSE", "ECE", "Electrical", "Mechanical"], hobbies: ["Coding", "Robotics", "Startups"] },
+            { name: "IIT Delhi", type: "IIT", percentile: 99.95, rank: 150, avgPkg: "24.8 LPA", placement: 98, reputation: "9.9/10", fields: ["CSE", "Mathematics", "Textile", "Mechanical"], hobbies: ["Robotics", "Design", "Music"] },
+            { name: "IIT Madras", type: "IIT", percentile: 99.92, rank: 250, avgPkg: "23.5 LPA", placement: 97, reputation: "10/10 (NIRF #1)", fields: ["Aerospace", "CSE", "Electrical", "Civil"], hobbies: ["Sailing", "Quizzing"] },
+            { name: "IIT Kanpur", type: "IIT", percentile: 99.91, rank: 350, avgPkg: "22.5 LPA", placement: 96, reputation: "9.8/10", fields: ["CSE", "Economics", "Mechanical"], hobbies: ["Rock", "Sports"] },
+            { name: "IIT Kharagpur", type: "IIT", percentile: 99.88, rank: 600, avgPkg: "21.0 LPA", placement: 95, reputation: "9.7/10", fields: ["Mining", "Agriculture", "CSE", "Mechanical"], hobbies: ["Social", "Arts"] },
+            { name: "IIT Roorkee", type: "IIT", percentile: 99.85, rank: 800, avgPkg: "20.5 LPA", placement: 94, reputation: "9.6/10", fields: ["CSE", "ECE", "Civil", "Architecture"], hobbies: ["Photography", "Fine Arts"] },
+            { name: "IIT Guwahati", type: "IIT", percentile: 99.82, rank: 1000, avgPkg: "19.8 LPA", placement: 93, reputation: "9.5/10", fields: ["CSE", "Design", "Biotech", "Mechanical"], hobbies: ["Nature", "Trekking"] },
+            { name: "IIT Hyderabad", type: "IIT", percentile: 99.80, rank: 1200, avgPkg: "21.2 LPA", placement: 95, reputation: "9.4/10", fields: ["CSE", "AI", "ECE"], hobbies: ["Innovation", "Gaming"] },
+            { name: "NIT Trichy", type: "NIT", percentile: 99.75, rank: null, avgPkg: "15.8 LPA", placement: 94, reputation: "9.2/10", fields: ["CSE", "ECE", "Production", "Chemical"], hobbies: ["Festivals", "Sports"] },
+            { name: "NIT Surathkal", type: "NIT", percentile: 99.55, rank: null, avgPkg: "14.2 LPA", placement: 92, reputation: "9.0/10", fields: ["IT", "CSE", "Mechanical", "Civil"], hobbies: ["Surfing", "Tech"] },
+            { name: "NIT Rourkela", type: "NIT", percentile: 99.30, rank: null, avgPkg: "13.5 LPA", placement: 91, reputation: "8.9/10", fields: ["CSE", "ECE", "Ceramic", "Mining"], hobbies: ["Sports", "Social"] },
+            { name: "NIT Warangal", type: "NIT", percentile: 99.60, rank: null, avgPkg: "15.2 LPA", placement: 93, reputation: "9.1/10", fields: ["CSE", "ECE", "Electrical", "Mechanical"], hobbies: ["Quizzing", "Coding"] },
+            { name: "NIT Jaipur", type: "NIT", percentile: 99.10, rank: null, avgPkg: "12.8 LPA", placement: 89, reputation: "8.7/10", fields: ["CSE", "ECE", "Civil", "Architecture"], hobbies: ["Arts", "Music"] },
+            { name: "NIT Allahabad", type: "NIT", percentile: 99.40, rank: null, avgPkg: "14.8 LPA", placement: 92, reputation: "8.8/10", fields: ["CSE", "IT", "ECE", "Production"], hobbies: ["Tech", "Startups"] },
+            { name: "NIT Patna", type: "NIT", percentile: 97.80, rank: null, avgPkg: "10.5 LPA", placement: 86, reputation: "8.1/10", fields: ["CSE", "Electrical", "Mechanical", "Civil"], hobbies: ["Gaming", "Cultural"] },
+            { name: "NIT Jamshedpur", type: "NIT", percentile: 98.50, rank: null, avgPkg: "11.2 LPA", placement: 88, reputation: "8.3/10", fields: ["CSE", "Mechanical", "Production", "ECE"], hobbies: ["Sports", "Coding"] },
+            { name: "NIT Kurukshetra", type: "NIT", percentile: 98.90, rank: null, avgPkg: "12.0 LPA", placement: 90, reputation: "8.5/10", fields: ["CSE", "IT", "Electrical", "Mechanical"], hobbies: ["Debating", "Music"] },
+            { name: "IIIT Hyderabad", type: "IIIT", percentile: 99.85, rank: null, avgPkg: "31.2 LPA", placement: 100, reputation: "9.6/10", fields: ["CSE", "ECE"], hobbies: ["Coding", "AI", "Gaming"] },
+            { name: "IIIT Bangalore", type: "IIIT", percentile: 99.70, rank: null, avgPkg: "28.5 LPA", placement: 99, reputation: "9.5/10", fields: ["CSE", "Data Science"], hobbies: ["Hackathons", "Innovation"] },
+            { name: "IIIT Gwalior", type: "IIIT", percentile: 99.20, rank: null, avgPkg: "22.5 LPA", placement: 96, reputation: "9.0/10", fields: ["IT", "Management", "ECE"], hobbies: ["Business", "Tech"] },
+            { name: "IIIT Lucknow", type: "IIIT", percentile: 98.80, rank: null, avgPkg: "20.8 LPA", placement: 95, reputation: "8.7/10", fields: ["CSE", "AI", "Data Science"], hobbies: ["Startups", "Gaming"] },
+            { name: "BIT Mesra", type: "NIT", percentile: 95.8, rank: null, avgPkg: "11.5 LPA", placement: 87, reputation: "8.4/10", fields: ["CSE", "Mechanical", "ECE", "Civil"], hobbies: ["Space", "Cultural"] },
+            { name: "DTU Delhi", type: "NIT", percentile: 98.2, rank: null, avgPkg: "16.5 LPA", placement: 90, reputation: "8.9/10", fields: ["Software", "Mechanical", "ECE", "Electrical"], hobbies: ["Automotive", "Drama"] },
+            { name: "NSUT Delhi", type: "NIT", percentile: 98.1, rank: null, avgPkg: "15.8 LPA", placement: 89, reputation: "8.8/10", fields: ["CSE", "IT", "ECE", "ICE"], hobbies: ["Robotics", "Festivals"] },
+            { name: "BITS Pilani", type: "IIT", percentile: 99.1, rank: null, avgPkg: "19.5 LPA", placement: 97, reputation: "9.7/10", fields: ["CSE", "Mechanical", "ECE", "Economics"], hobbies: ["Leadership", "Innovation"] },
+            { name: "VIT Vellore", type: "IIIT", percentile: 90.5, rank: null, avgPkg: "9.2 LPA", placement: 85, reputation: "7.8/10", fields: ["CSE", "IT", "Mechanical", "ECE"], hobbies: ["Gaming", "Hackathons"] },
+            { name: "PEC Chandigarh", type: "NIT", percentile: 97.5, rank: null, avgPkg: "11.8 LPA", placement: 88, reputation: "8.2/10", fields: ["CSE", "Aero", "Mechanical", "Civil"], hobbies: ["Flying", "Aero"] },
+            { name: "COEP Pune", type: "NIT", percentile: 98.5, rank: null, avgPkg: "11.2 LPA", placement: 90, reputation: "8.8/10", fields: ["CSE", "Mechanical", "Electrical", "Civil"], hobbies: ["Tech", "History"] },
+            { name: "VNIT Nagpur", type: "NIT", percentile: 98.8, rank: null, avgPkg: "11.5 LPA", placement: 88, reputation: "8.6/10", fields: ["CSE", "Mechanical", "ECE", "Chemical"], hobbies: ["Social", "Arts"] },
+            { name: "MANIT Bhopal", type: "NIT", percentile: 98.4, rank: null, avgPkg: "10.8 LPA", placement: 87, reputation: "8.4/10", fields: ["CSE", "Electrical", "ECE", "Architecture"], hobbies: ["Design", "Drama"] },
+            { name: "NIT Delhi", type: "NIT", percentile: 98.6, rank: null, avgPkg: "11.2 LPA", placement: 88, reputation: "8.3/10", fields: ["CSE", "ECE", "Electrical"], hobbies: ["Coding", "Robotics"] }
+        ];
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const form = document.getElementById('counsel-form');
+            const advCleared = document.getElementById('adv_cleared');
+            const rankDiv = document.getElementById('rank-input-div');
+            const app = {
+                inputStep: document.getElementById('input-step'),
+                resultsStep: document.getElementById('results-step'),
+                loading: document.getElementById('loading'),
+                resultsContent: document.getElementById('results-content')
+            };
+
+            advCleared.addEventListener('change', () => {
+                rankDiv.style.display = advCleared.checked ? 'flex' : 'none';
+                document.getElementById('rank').required = advCleared.checked;
+            });
+
+            form.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                app.inputStep.classList.remove('active');
+                app.resultsStep.classList.add('active');
+                app.loading.classList.remove('hidden');
+                app.resultsContent.classList.add('hidden');
+
+                await new Promise(r => setTimeout(r, 1800));
+
+                const user = {
+                    perc: parseFloat(document.getElementById('percentile').value),
+                    rank: parseInt(document.getElementById('rank').value) || null,
+                    field: document.getElementById('interested_field').value,
+                    hobbies: document.getElementById('hobbies').value.toLowerCase(),
+                    dream: document.getElementById('desired_college').value.trim().toLowerCase(),
+                    adv: advCleared.checked
+                };
+
+                console.log('Processing for:', user);
+                processRecommendations(user);
+                app.loading.classList.add('hidden');
+                app.resultsContent.classList.remove('hidden');
+            });
+
+            document.getElementById('back-btn').addEventListener('click', () => {
+                app.resultsStep.classList.remove('active');
+                app.inputStep.classList.add('active');
+            });
+
+            function calculateProbability(userValue, targetValue, isRank = false) {
+                if (isRank) {
+                    if (!userValue) return 0;
+                    const ratio = targetValue / userValue;
+                    if (ratio >= 1) return 95 + Math.min(4, ratio * 2);
+                    if (ratio > 0.5) return Math.round(ratio * 90);
+                    return Math.max(5, Math.round(ratio * 150));
+                } else {
+                    const diff = userValue - targetValue;
+                    if (diff >= 0) return Math.min(99, 90 + Math.round(diff * 5));
+                    if (diff > -2) return Math.round(50 + (diff * 20));
+                    return Math.max(5, Math.round(10 + (diff * 5)));
+                }
+            }
+
+            function processRecommendations(user) {
+                // 1. Match Dream
+                const dreamCol = COLLEGES.find(c => c.name.toLowerCase().includes(user.dream) && user.dream.length > 2);
+                let dreamProb = 0;
+                if (dreamCol) {
+                    dreamProb = calculateProbability(
+                        dreamCol.type === 'IIT' ? user.rank : user.perc,
+                        dreamCol.type === 'IIT' ? dreamCol.rank : dreamCol.percentile,
+                        dreamCol.type === 'IIT'
+                    );
+                }
+
+                // 2. Find Best Match
+                let eligible = COLLEGES.filter(c => {
+                    if (c.type === 'IIT') return user.adv && user.rank && user.rank <= (c.rank * 1.8);
+                    return user.perc >= (c.percentile - 3.5);
+                });
+
+                eligible = eligible.map(c => {
+                    let score = c.fields.some(f => f.includes(user.field) || user.field.includes(f)) ? 40 : 0;
+                    score += c.hobbies.filter(h => user.hobbies.includes(h.toLowerCase())).length * 10;
+                    score += (c.placement / 10);
+                    return { ...c, matchScore: score };
+                }).sort((a, b) => b.matchScore - a.matchScore);
+
+                const bestMatch = eligible[0] || COLLEGES[COLLEGES.length - 1];
+                const bestProb = calculateProbability(
+                    bestMatch.type === 'IIT' ? user.rank : user.perc,
+                    bestMatch.type === 'IIT' ? bestMatch.rank : bestMatch.percentile,
+                    bestMatch.type === 'IIT'
+                );
+
+                renderUI(dreamCol, dreamProb, bestMatch, bestProb, eligible.slice(1, 4), user.field);
+            }
+
+            function renderUI(dream, dreamProb, ai, aiProb, alternatives, field) {
+                const probContainer = document.getElementById('prob-container');
+                const getStatus = p => p > 70 ? 'high' : (p > 30 ? 'med' : 'low');
+                const getLabel = p => p > 85 ? 'Safe Match' : (p > 60 ? 'Good Target' : (p > 30 ? 'Reach' : 'High Reach'));
+                
+                probContainer.innerHTML = `
+                    <div class="prob-card glass-card">
+                        <h4>AI Strategy Choice</h4>
+                        <h3>${ai.name}</h3>
+                        <div class="prob-circle ${getStatus(aiProb)}">${aiProb}%</div>
+                        <p style="margin-top:1rem; font-size:0.8rem; color:var(--text-dim)">${getLabel(aiProb)}</p>
+                    </div>
+                    <div class="prob-card glass-card">
+                        <h4>Your Dream Choice</h4>
+                        <h3>${dream ? dream.name : 'Not in Database'}</h3>
+                        <div class="prob-circle ${dream ? getStatus(dreamProb) : ''}">${dream ? dreamProb + '%' : '--'}</div>
+                        <p style="margin-top:1rem; font-size:0.8rem; color:var(--text-dim)">${dream ? getLabel(dreamProb) : 'Waitlist/Data Pending'}</p>
+                    </div>
+                `;
+
+                const table = document.getElementById('comp-table');
+                const dreamName = dream ? dream.name : 'Unknown Choice';
+                table.innerHTML = `
+                    <tr><th>Parameter</th><th>${ai.name} (AI)</th><th>${dreamName}</th></tr>
+                    <tr><td class="feature">Chances</td><td>${getLabel(aiProb)} (${aiProb}%)</td><td>${dream ? getLabel(dreamProb) + ' (' + dreamProb + '%)' : 'Insufficient Data'}</td></tr>
+                    <tr><td class="feature">Avg Package</td><td>${ai.avgPkg}</td><td>${dream ? dream.avgPkg : 'Pending'}</td></tr>
+                    <tr><td class="feature">Placement</td><td>${ai.placement}%</td><td>${dream ? dream.placement + '%' : 'N/A'}</td></tr>
+                    <tr><td class="feature">Reputation</td><td>${ai.reputation}</td><td>${dream ? dream.reputation : 'High (Est.)'}</td></tr>
+                    <tr><td class="feature">Best For</td><td>${ai.fields.slice(0, 2).join(', ')}</td><td>${dream ? dream.fields.slice(0, 2).join(', ') : 'Requested Field'}</td></tr>
+                `;
+
+                const recList = document.getElementById('rec-list');
+                recList.innerHTML = '';
+                alternatives.forEach(c => {
+                    const card = document.createElement('div');
+                    card.className = 'college-card';
+                    card.innerHTML = `
+                        <span class="badge badge-${c.type.toLowerCase()}">${c.type}</span>
+                        <h4 style="margin-top:1rem">${c.name}</h4>
+                        <p style="font-size:0.8rem; color:var(--text-dim); margin-bottom:1rem">${c.reputation}</p>
+                        <div style="font-size:0.9rem; margin-bottom:0.5rem"><b>Package:</b> ${c.avgPkg}</div>
+                        <div style="font-size:0.9rem; margin-bottom:0.5rem"><b>Fields:</b> ${c.fields.slice(0, 2).join(', ')}</div>
+                        <div style="margin-top:1rem">
+                            ${c.hobbies.map(h => `<span class="advantage-pill">${h}</span>`).join('')}
+                        </div>
+                    `;
+                    recList.appendChild(card);
+                });
+            }
+        });
+    </script>
+</body>
+</html>
