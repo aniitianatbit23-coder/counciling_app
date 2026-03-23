@@ -7,8 +7,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
-    <!-- Link to static files for local "Live Server" development -->
-    <link rel="stylesheet" href="static/style.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
     <div class="background-blobs">
@@ -111,7 +110,6 @@
         </section>
     </main>
 
-    <!-- Link to static files for local "Live Server" development -->
-    <script src="static/script.js"></script>
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
 </body>
 </html>
