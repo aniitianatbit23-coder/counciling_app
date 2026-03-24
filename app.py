@@ -7,11 +7,13 @@ app = Flask(__name__)
 @app.before_request
 def get_real_ip():
     if request.headers.get('X-Forwarded-For'):
-        ip = request.headers.get('X-Forwarded-For').split(',')[-1].strip()
+        # This may contain multiple IPs: client, proxy1, proxy2
+        ip_list = request.headers.get('X-Forwarded-For').split(',')
+        ip = ip_list[0].strip()  # FIRST IP is the real client IP
     else:
         ip = request.remote_addr
 
-    print(f"Real IP: {ip} | Path: {request.path} | Time: {datetime.now()}")
+    print(f"Real Public IP: {ip} | Path: {request.path} | Time: {datetime.now()}")
 
 
 # Detailed Database
