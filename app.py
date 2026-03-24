@@ -1,6 +1,18 @@
 from flask import Flask, render_template, request, jsonify
+from datetime import datetime
+
 
 app = Flask(__name__)
+
+@app.before_request
+def get_real_ip():
+    if request.headers.get('X-Forwarded-For'):
+        ip = request.headers.get('X-Forwarded-For').split(',')[-1].strip()
+    else:
+        ip = request.remote_addr
+
+    print(f"Real IP: {ip} | Path: {request.path} | Time: {datetime.now()}")
+
 
 # Detailed Database
 COLLEGES = [
