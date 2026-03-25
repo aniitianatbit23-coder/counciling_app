@@ -124,7 +124,10 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function processRecommendations(user) {
-        const dreamCol = COLLEGES.find(c => c.name.toLowerCase().includes(user.dream) && user.dream.length > 2);
+        const dreamCol = user.dream.length > 0 
+            ? COLLEGES.find(c => c.name.toLowerCase().includes(user.dream) || user.dream.includes(c.name.toLowerCase())) 
+            : null;
+        
         let dreamProb = 0;
         if (dreamCol) {
             dreamProb = calculateProbability(
@@ -183,21 +186,21 @@ document.addEventListener('DOMContentLoaded', () => {
             </div>
             <div class="prob-card glass-card">
                 <h4>Your Dream Choice</h4>
-                <h3>${dream ? dream.name : 'Not in Database'}</h3>
+                <h3>${dream ? dream.name : (field ? 'No Match Found' : 'Not Selected')}</h3>
                 <div class="prob-circle ${dream ? getStatus(dreamProb) : ''}">${dream ? dreamProb + '%' : '--'}</div>
-                <p style="margin-top:1rem; font-size:0.8rem; color:var(--text-dim)">${dream ? getLabel(dreamProb) : 'Waitlist/Data Pending'}</p>
+                <p style="margin-top:1rem; font-size:0.8rem; color:var(--text-dim)">${dream ? getLabel(dreamProb) : (field ? 'Check database names' : 'Enter a college above')}</p>
             </div>
         `;
 
         const table = document.getElementById('comp-table');
-        const dreamName = dream ? dream.name : 'Unknown Choice';
+        const dreamName = dream ? dream.name : (field ? 'No Match' : 'None');
         table.innerHTML = `
             <tr><th>Parameter</th><th>${ai.name} (AI)</th><th>${dreamName}</th></tr>
-            <tr><td class="feature">Chances</td><td>${getLabel(aiProb)} (${aiProb}%)</td><td>${dream ? getLabel(dreamProb) + ' (' + dreamProb + '%)' : 'Insufficient Data'}</td></tr>
-            <tr><td class="feature">Avg Package</td><td>${ai.avgPkg}</td><td>${dream ? dream.avgPkg : 'Pending'}</td></tr>
-            <tr><td class="feature">Placement</td><td>${ai.placement}%</td><td>${dream ? dream.placement + '%' : 'N/A'}</td></tr>
-            <tr><td class="feature">Reputation</td><td>${ai.reputation}</td><td>${dream ? dream.reputation : 'High (Est.)'}</td></tr>
-            <tr><td class="feature">Best For</td><td>${ai.fields.slice(0, 2).join(', ')}</td><td>${dream ? dream.fields.slice(0, 2).join(', ') : 'Requested Field'}</td></tr>
+            <tr><td class="feature">Chances</td><td>${getLabel(aiProb)} (${aiProb}%)</td><td>${dream ? getLabel(dreamProb) + ' (' + dreamProb + '%)' : 'N/A'}</td></tr>
+            <tr><td class="feature">Avg Package</td><td>${ai.avgPkg}</td><td>${dream ? dream.avgPkg : '--'}</td></tr>
+            <tr><td class="feature">Placement</td><td>${ai.placement}%</td><td>${dream ? dream.placement + '%' : '--'}</td></tr>
+            <tr><td class="feature">Reputation</td><td>${ai.reputation}</td><td>${dream ? dream.reputation : '--'}</td></tr>
+            <tr><td class="feature">Best For</td><td>${ai.fields.slice(0, 2).join(', ')}</td><td>${dream ? dream.fields.slice(0, 2).join(', ') : '--'}</td></tr>
         `;
 
         const recList = document.getElementById('rec-list');
