@@ -1,35 +1,35 @@
 const COLLEGES = [
-    { name: "IIT Bombay", type: "IIT", percentile: 99.98, rank: 50, avgPkg: "26.5 LPA", placement: 99, reputation: "10/10", fields: ["CSE", "ECE", "Electrical", "Mechanical"], hobbies: ["Coding", "Robotics", "Startups"] },
-    { name: "IIT Delhi", type: "IIT", percentile: 99.95, rank: 150, avgPkg: "24.8 LPA", placement: 98, reputation: "9.9/10", fields: ["CSE", "Mathematics", "Textile", "Mechanical"], hobbies: ["Robotics", "Design", "Music"] },
-    { name: "IIT Madras", type: "IIT", percentile: 99.92, rank: 250, avgPkg: "23.5 LPA", placement: 97, reputation: "10/10 (NIRF #1)", fields: ["Aerospace", "CSE", "Electrical", "Civil"], hobbies: ["Sailing", "Quizzing"] },
-    { name: "IIT Kanpur", type: "IIT", percentile: 99.91, rank: 350, avgPkg: "22.5 LPA", placement: 96, reputation: "9.8/10", fields: ["CSE", "Economics", "Mechanical"], hobbies: ["Rock", "Sports"] },
-    { name: "IIT Kharagpur", type: "IIT", percentile: 99.88, rank: 600, avgPkg: "21.0 LPA", placement: 95, reputation: "9.7/10", fields: ["Mining", "Agriculture", "CSE", "Mechanical"], hobbies: ["Social", "Arts"] },
-    { name: "IIT Roorkee", type: "IIT", percentile: 99.85, rank: 800, avgPkg: "20.5 LPA", placement: 94, reputation: "9.6/10", fields: ["CSE", "ECE", "Civil", "Architecture"], hobbies: ["Photography", "Fine Arts"] },
-    { name: "IIT Guwahati", type: "IIT", percentile: 99.82, rank: 1000, avgPkg: "19.8 LPA", placement: 93, reputation: "9.5/10", fields: ["CSE", "Design", "Biotech", "Mechanical"], hobbies: ["Nature", "Trekking"] },
-    { name: "IIT Hyderabad", type: "IIT", percentile: 99.80, rank: 1200, avgPkg: "21.2 LPA", placement: 95, reputation: "9.4/10", fields: ["CSE", "AI", "ECE"], hobbies: ["Innovation", "Gaming"] },
-    { name: "NIT Trichy", type: "NIT", percentile: 99.75, rank: null, avgPkg: "15.8 LPA", placement: 94, reputation: "9.2/10", fields: ["CSE", "ECE", "Production", "Chemical"], hobbies: ["Festivals", "Sports"] },
-    { name: "NIT Surathkal", type: "NIT", percentile: 99.55, rank: null, avgPkg: "14.2 LPA", placement: 92, reputation: "9.0/10", fields: ["IT", "CSE", "Mechanical", "Civil"], hobbies: ["Surfing", "Tech"] },
-    { name: "NIT Rourkela", type: "NIT", percentile: 99.30, rank: null, avgPkg: "13.5 LPA", placement: 91, reputation: "8.9/10", fields: ["CSE", "ECE", "Ceramic", "Mining"], hobbies: ["Sports", "Social"] },
-    { name: "NIT Warangal", type: "NIT", percentile: 99.60, rank: null, avgPkg: "15.2 LPA", placement: 93, reputation: "9.1/10", fields: ["CSE", "ECE", "Electrical", "Mechanical"], hobbies: ["Quizzing", "Coding"] },
-    { name: "NIT Jaipur", type: "NIT", percentile: 99.10, rank: null, avgPkg: "12.8 LPA", placement: 89, reputation: "8.7/10", fields: ["CSE", "ECE", "Civil", "Architecture"], hobbies: ["Arts", "Music"] },
-    { name: "NIT Allahabad", type: "NIT", percentile: 99.40, rank: null, avgPkg: "14.8 LPA", placement: 92, reputation: "8.8/10", fields: ["CSE", "IT", "ECE", "Production"], hobbies: ["Tech", "Startups"] },
-    { name: "NIT Patna", type: "NIT", percentile: 97.80, rank: null, avgPkg: "10.5 LPA", placement: 86, reputation: "8.1/10", fields: ["CSE", "Electrical", "Mechanical", "Civil"], hobbies: ["Gaming", "Cultural"] },
-    { name: "NIT Jamshedpur", type: "NIT", percentile: 98.50, rank: null, avgPkg: "11.2 LPA", placement: 88, reputation: "8.3/10", fields: ["CSE", "Mechanical", "Production", "ECE"], hobbies: ["Sports", "Coding"] },
-    { name: "NIT Kurukshetra", type: "NIT", percentile: 98.90, rank: null, avgPkg: "12.0 LPA", placement: 90, reputation: "8.5/10", fields: ["CSE", "IT", "Electrical", "Mechanical"], hobbies: ["Debating", "Music"] },
-    { name: "IIIT Hyderabad", type: "IIIT", percentile: 99.85, rank: null, avgPkg: "31.2 LPA", placement: 100, reputation: "9.6/10", fields: ["CSE", "ECE"], hobbies: ["Coding", "AI", "Gaming"] },
-    { name: "IIIT Bangalore", type: "IIIT", percentile: 99.70, rank: null, avgPkg: "28.5 LPA", placement: 99, reputation: "9.5/10", fields: ["CSE", "Data Science"], hobbies: ["Hackathons", "Innovation"] },
-    { name: "IIIT Gwalior", type: "IIIT", percentile: 99.20, rank: null, avgPkg: "22.5 LPA", placement: 96, reputation: "9.0/10", fields: ["IT", "Management", "ECE"], hobbies: ["Business", "Tech"] },
-    { name: "IIIT Lucknow", type: "IIIT", percentile: 98.80, rank: null, avgPkg: "20.8 LPA", placement: 95, reputation: "8.7/10", fields: ["CSE", "AI", "Data Science"], hobbies: ["Startups", "Gaming"] },
-    { name: "BIT Mesra", type: "NIT", percentile: 95.8, rank: null, avgPkg: "11.5 LPA", placement: 87, reputation: "8.4/10", fields: ["CSE", "Mechanical", "ECE", "Civil"], hobbies: ["Space", "Cultural"] },
-    { name: "DTU Delhi", type: "NIT", percentile: 98.2, rank: null, avgPkg: "16.5 LPA", placement: 90, reputation: "8.9/10", fields: ["Software", "Mechanical", "ECE", "Electrical"], hobbies: ["Automotive", "Drama"] },
-    { name: "NSUT Delhi", type: "NIT", percentile: 98.1, rank: null, avgPkg: "15.8 LPA", placement: 89, reputation: "8.8/10", fields: ["CSE", "IT", "ECE", "ICE"], hobbies: ["Robotics", "Festivals"] },
-    { name: "BITS Pilani", type: "IIT", percentile: 99.1, rank: null, avgPkg: "19.5 LPA", placement: 97, reputation: "9.7/10", fields: ["CSE", "Mechanical", "ECE", "Economics"], hobbies: ["Leadership", "Innovation"] },
-    { name: "VIT Vellore", type: "IIIT", percentile: 90.5, rank: null, avgPkg: "9.2 LPA", placement: 85, reputation: "7.8/10", fields: ["CSE", "IT", "Mechanical", "ECE"], hobbies: ["Gaming", "Hackathons"] },
-    { name: "PEC Chandigarh", type: "NIT", percentile: 97.5, rank: null, avgPkg: "11.8 LPA", placement: 88, reputation: "8.2/10", fields: ["CSE", "Aero", "Mechanical", "Civil"], hobbies: ["Flying", "Aero"] },
-    { name: "COEP Pune", type: "NIT", percentile: 98.5, rank: null, avgPkg: "11.2 LPA", placement: 90, reputation: "8.8/10", fields: ["CSE", "Mechanical", "Electrical", "Civil"], hobbies: ["Tech", "History"] },
-    { name: "VNIT Nagpur", type: "NIT", percentile: 98.8, rank: null, avgPkg: "11.5 LPA", placement: 88, reputation: "8.6/10", fields: ["CSE", "Mechanical", "ECE", "Chemical"], hobbies: ["Social", "Arts"] },
-    { name: "MANIT Bhopal", type: "NIT", percentile: 98.4, rank: null, avgPkg: "10.8 LPA", placement: 87, reputation: "8.4/10", fields: ["CSE", "Electrical", "ECE", "Architecture"], hobbies: ["Design", "Drama"] },
-    { name: "NIT Delhi", type: "NIT", percentile: 98.6, rank: null, avgPkg: "11.2 LPA", placement: 88, reputation: "8.3/10", fields: ["CSE", "ECE", "Electrical"], hobbies: ["Coding", "Robotics"] }
+    { name: "IIT Bombay", type: "IIT", percentile: 99.98, rank: 50, avgPkg: "26.5 LPA", placement: 99, reputation: "10/10", fields: ["CSE", "ECE", "Electrical", "Mechanical"], hobbies: ["Coding", "Robotics", "Startups"], lat: 19.1334, lon: 72.9133 },
+    { name: "IIT Delhi", type: "IIT", percentile: 99.95, rank: 150, avgPkg: "24.8 LPA", placement: 98, reputation: "9.9/10", fields: ["CSE", "Mathematics", "Textile", "Mechanical"], hobbies: ["Robotics", "Design", "Music"], lat: 28.5450, lon: 77.1926 },
+    { name: "IIT Madras", type: "IIT", percentile: 99.92, rank: 250, avgPkg: "23.5 LPA", placement: 97, reputation: "10/10 (NIRF #1)", fields: ["Aerospace", "CSE", "Electrical", "Civil"], hobbies: ["Sailing", "Quizzing"], lat: 12.9915, lon: 80.2336 },
+    { name: "IIT Kanpur", type: "IIT", percentile: 99.91, rank: 350, avgPkg: "22.5 LPA", placement: 96, reputation: "9.8/10", fields: ["CSE", "Economics", "Mechanical"], hobbies: ["Rock", "Sports"], lat: 26.5123, lon: 80.2329 },
+    { name: "IIT Kharagpur", type: "IIT", percentile: 99.88, rank: 600, avgPkg: "21.0 LPA", placement: 95, reputation: "9.7/10", fields: ["Mining", "Agriculture", "CSE", "Mechanical"], hobbies: ["Social", "Arts"], lat: 22.3149, lon: 87.3105 },
+    { name: "IIT Roorkee", type: "IIT", percentile: 99.85, rank: 800, avgPkg: "20.5 LPA", placement: 94, reputation: "9.6/10", fields: ["CSE", "ECE", "Civil", "Architecture"], hobbies: ["Photography", "Fine Arts"], lat: 29.8649, lon: 77.8965 },
+    { name: "IIT Guwahati", type: "IIT", percentile: 99.82, rank: 1000, avgPkg: "19.8 LPA", placement: 93, reputation: "9.5/10", fields: ["CSE", "Design", "Biotech", "Mechanical"], hobbies: ["Nature", "Trekking"], lat: 26.1873, lon: 91.6917 },
+    { name: "IIT Hyderabad", type: "IIT", percentile: 99.80, rank: 1200, avgPkg: "21.2 LPA", placement: 95, reputation: "9.4/10", fields: ["CSE", "AI", "ECE"], hobbies: ["Innovation", "Gaming"], lat: 17.5947, lon: 78.1230 },
+    { name: "NIT Trichy", type: "NIT", percentile: 99.75, rank: null, avgPkg: "15.8 LPA", placement: 94, reputation: "9.2/10", fields: ["CSE", "ECE", "Production", "Chemical"], hobbies: ["Festivals", "Sports"], lat: 10.7589, lon: 78.8132 },
+    { name: "NIT Surathkal", type: "NIT", percentile: 99.55, rank: null, avgPkg: "14.2 LPA", placement: 92, reputation: "9.0/10", fields: ["IT", "CSE", "Mechanical", "Civil"], hobbies: ["Surfing", "Tech"], lat: 13.0108, lon: 74.7943 },
+    { name: "NIT Rourkela", type: "NIT", percentile: 99.30, rank: null, avgPkg: "13.5 LPA", placement: 91, reputation: "8.9/10", fields: ["CSE", "ECE", "Ceramic", "Mining"], hobbies: ["Sports", "Social"], lat: 22.2533, lon: 84.9011 },
+    { name: "NIT Warangal", type: "NIT", percentile: 99.60, rank: null, avgPkg: "15.2 LPA", placement: 93, reputation: "9.1/10", fields: ["CSE", "ECE", "Electrical", "Mechanical"], hobbies: ["Quizzing", "Coding"], lat: 17.9839, lon: 79.5312 },
+    { name: "NIT Jaipur", type: "NIT", percentile: 99.10, rank: null, avgPkg: "12.8 LPA", placement: 89, reputation: "8.7/10", fields: ["CSE", "ECE", "Civil", "Architecture"], hobbies: ["Arts", "Music"], lat: 26.8615, lon: 75.8118 },
+    { name: "NIT Allahabad", type: "NIT", percentile: 99.40, rank: null, avgPkg: "14.8 LPA", placement: 92, reputation: "8.8/10", fields: ["CSE", "IT", "ECE", "Production"], hobbies: ["Tech", "Startups"], lat: 25.4920, lon: 81.8665 },
+    { name: "NIT Patna", type: "NIT", percentile: 97.80, rank: null, avgPkg: "10.5 LPA", placement: 86, reputation: "8.1/10", fields: ["CSE", "Electrical", "Mechanical", "Civil"], hobbies: ["Gaming", "Cultural"], lat: 25.6208, lon: 85.1720 },
+    { name: "NIT Jamshedpur", type: "NIT", percentile: 98.50, rank: null, avgPkg: "11.2 LPA", placement: 88, reputation: "8.3/10", fields: ["CSE", "Mechanical", "Production", "ECE"], hobbies: ["Sports", "Coding"], lat: 22.7766, lon: 86.1425 },
+    { name: "NIT Kurukshetra", type: "NIT", percentile: 98.90, rank: null, avgPkg: "12.0 LPA", placement: 90, reputation: "8.5/10", fields: ["CSE", "IT", "Electrical", "Mechanical"], hobbies: ["Debating", "Music"], lat: 29.9452, lon: 76.8166 },
+    { name: "IIIT Hyderabad", type: "IIIT", percentile: 99.85, rank: null, avgPkg: "31.2 LPA", placement: 100, reputation: "9.6/10", fields: ["CSE", "ECE"], hobbies: ["Coding", "AI", "Gaming"], lat: 17.4448, lon: 78.3498 },
+    { name: "IIIT Bangalore", type: "IIIT", percentile: 99.70, rank: null, avgPkg: "28.5 LPA", placement: 99, reputation: "9.5/10", fields: ["CSE", "Data Science"], hobbies: ["Hackathons", "Innovation"], lat: 12.8448, lon: 77.6632 },
+    { name: "IIIT Gwalior", type: "IIIT", percentile: 99.20, rank: null, avgPkg: "22.5 LPA", placement: 96, reputation: "9.0/10", fields: ["IT", "Management", "ECE"], hobbies: ["Business", "Tech"], lat: 26.2495, lon: 78.1738 },
+    { name: "IIIT Lucknow", type: "IIIT", percentile: 98.80, rank: null, avgPkg: "20.8 LPA", placement: 95, reputation: "8.7/10", fields: ["CSE", "AI", "Data Science"], hobbies: ["Startups", "Gaming"], lat: 26.9124, lon: 81.0247 },
+    { name: "BIT Mesra", type: "NIT", percentile: 95.8, rank: null, avgPkg: "11.5 LPA", placement: 87, reputation: "8.4/10", fields: ["CSE", "Mechanical", "ECE", "Civil"], hobbies: ["Space", "Cultural"], lat: 23.4123, lon: 85.4399 },
+    { name: "DTU Delhi", type: "NIT", percentile: 98.2, rank: null, avgPkg: "16.5 LPA", placement: 90, reputation: "8.9/10", fields: ["Software", "Mechanical", "ECE", "Electrical"], hobbies: ["Automotive", "Drama"], lat: 28.7501, lon: 77.1177 },
+    { name: "NSUT Delhi", type: "NIT", percentile: 98.1, rank: null, avgPkg: "15.8 LPA", placement: 89, reputation: "8.8/10", fields: ["CSE", "IT", "ECE", "ICE"], hobbies: ["Robotics", "Festivals"], lat: 28.6091, lon: 77.0351 },
+    { name: "BITS Pilani", type: "IIT", percentile: 99.1, rank: null, avgPkg: "19.5 LPA", placement: 97, reputation: "9.7/10", fields: ["CSE", "Mechanical", "ECE", "Economics"], hobbies: ["Leadership", "Innovation"], lat: 28.3639, lon: 75.5870 },
+    { name: "VIT Vellore", type: "IIIT", percentile: 90.5, rank: null, avgPkg: "9.2 LPA", placement: 85, reputation: "7.8/10", fields: ["CSE", "IT", "Mechanical", "ECE"], hobbies: ["Gaming", "Hackathons"], lat: 12.9692, lon: 79.1559 },
+    { name: "PEC Chandigarh", type: "NIT", percentile: 97.5, rank: null, avgPkg: "11.8 LPA", placement: 88, reputation: "8.2/10", fields: ["CSE", "Aero", "Mechanical", "Civil"], hobbies: ["Flying", "Aero"], lat: 30.7674, lon: 76.7865 },
+    { name: "COEP Pune", type: "NIT", percentile: 98.5, rank: null, avgPkg: "11.2 LPA", placement: 90, reputation: "8.8/10", fields: ["CSE", "Mechanical", "Electrical", "Civil"], hobbies: ["Tech", "History"], lat: 18.5293, lon: 73.8565 },
+    { name: "VNIT Nagpur", type: "NIT", percentile: 98.8, rank: null, avgPkg: "11.5 LPA", placement: 88, reputation: "8.6/10", fields: ["CSE", "Mechanical", "ECE", "Chemical"], hobbies: ["Social", "Arts"], lat: 21.1275, lon: 79.0514 },
+    { name: "MANIT Bhopal", type: "NIT", percentile: 98.4, rank: null, avgPkg: "10.8 LPA", placement: 87, reputation: "8.4/10", fields: ["CSE", "Electrical", "ECE", "Architecture"], hobbies: ["Design", "Drama"], lat: 23.2173, lon: 77.4069 },
+    { name: "NIT Delhi", type: "NIT", percentile: 98.6, rank: null, avgPkg: "11.2 LPA", placement: 88, reputation: "8.3/10", fields: ["CSE", "ECE", "Electrical"], hobbies: ["Coding", "Robotics"], lat: 28.8427, lon: 77.1049 }
 ];
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -42,6 +42,24 @@ document.addEventListener('DOMContentLoaded', () => {
         loading: document.getElementById('loading'),
         resultsContent: document.getElementById('results-content')
     };
+
+    let userLocation = null;
+
+    // Capture User Geolocation
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+            (position) => {
+                userLocation = {
+                    lat: position.coords.latitude,
+                    lon: position.coords.longitude
+                };
+                console.log("User Location Captured:", userLocation);
+            },
+            (error) => {
+                console.warn("Geolocation Error:", error.message);
+            }
+        );
+    }
 
     advCleared.addEventListener('change', () => {
         rankDiv.style.display = advCleared.checked ? 'flex' : 'none';
@@ -76,6 +94,19 @@ document.addEventListener('DOMContentLoaded', () => {
         app.resultsStep.classList.remove('active');
         app.inputStep.classList.add('active');
     });
+
+    // Haversine formula to calculate distance in km
+    function getDistance(lat1, lon1, lat2, lon2) {
+        if (!lat1 || !lon1 || !lat2 || !lon2) return null;
+        const R = 6371; // Radius of the earth in km
+        const dLat = (lat2 - lat1) * Math.PI / 180;
+        const dLon = (lon2 - lon1) * Math.PI / 180;
+        const a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+                Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
+                Math.sin(dLon / 2) * Math.sin(dLon / 2);
+        const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+        return R * c;
+    }
 
     function calculateProbability(userValue, targetValue, isRank = false) {
         if (isRank) {
@@ -112,7 +143,20 @@ document.addEventListener('DOMContentLoaded', () => {
             let score = c.fields.some(f => f.includes(user.field) || user.field.includes(f)) ? 40 : 0;
             score += c.hobbies.filter(h => user.hobbies.includes(h.toLowerCase())).length * 10;
             score += (c.placement / 10);
-            return { ...c, matchScore: score };
+            
+            // Add Proximity Score
+            let distance = null;
+            if (userLocation) {
+                distance = getDistance(userLocation.lat, userLocation.lon, c.lat, c.lon);
+                if (distance !== null) {
+                    // Maximum 20 points for proximity (closer is better)
+                    // 0km = 20pts, 500km = 10pts, 2000km+ = 0pts
+                    const proximityBonus = Math.max(0, 20 - (distance / 100));
+                    score += proximityBonus;
+                }
+            }
+            
+            return { ...c, matchScore: score, distance: distance };
         }).sort((a, b) => b.matchScore - a.matchScore);
 
         const bestMatch = eligible[0] || COLLEGES[COLLEGES.length - 1];
@@ -161,11 +205,18 @@ document.addEventListener('DOMContentLoaded', () => {
         alternatives.forEach(c => {
             const card = document.createElement('div');
             card.className = 'college-card';
+            const distInfo = c.distance ? `<div class="distance-tag">📍 ${c.distance.toFixed(1)} km away</div>` : '';
+            const nearbyBadge = (c.distance && c.distance < 300) ? `<span class="badge badge-nearby">Nearby</span>` : '';
+            
             card.innerHTML = `
-                <span class="badge badge-${c.type.toLowerCase()}">${c.type}</span>
+                <div style="display:flex; justify-content:space-between; align-items:flex-start;">
+                    <span class="badge badge-${c.type.toLowerCase()}">${c.type}</span>
+                    ${nearbyBadge}
+                </div>
                 <h4 style="margin-top:1rem">${c.name}</h4>
                 <p style="font-size:0.8rem; color:var(--text-dim); margin-bottom:1rem">${c.reputation}</p>
-                <div style="font-size:0.9rem; margin-bottom:0.5rem"><b>Package:</b> ${c.avgPkg}</div>
+                ${distInfo}
+                <div style="font-size:0.9rem; margin-bottom:0.5rem; margin-top:0.5rem"><b>Package:</b> ${c.avgPkg}</div>
                 <div style="font-size:0.9rem; margin-bottom:0.5rem"><b>Fields:</b> ${c.fields.slice(0, 2).join(', ')}</div>
                 <div style="margin-top:1rem">
                     ${c.hobbies.map(h => `<span class="advantage-pill">${h}</span>`).join('')}

@@ -16,7 +16,7 @@ def get_real_ip():
     print(f"Real Public IP: {ip} | Path: {request.path} | Time: {datetime.now()}")
 
 
-# Detailed Database
+# Detailed Database with Geolocation
 COLLEGES = [
     {
         "name": "IIT Bombay",
@@ -25,7 +25,9 @@ COLLEGES = [
         "avg_package": "23.5 LPA",
         "placement_rate": 99,
         "reputation": "1st (NIRF)",
-        "fields": ["CSE", "Mechanical Engineering", "ECE", "Electrical", "Civil"]
+        "fields": ["CSE", "Mechanical Engineering", "ECE", "Electrical", "Civil"],
+        "lat": 19.1334,
+        "lon": 72.9133
     },
     {
         "name": "NIT Trichy",
@@ -34,7 +36,9 @@ COLLEGES = [
         "avg_package": "16.4 LPA",
         "placement_rate": 94,
         "reputation": "Top NIT",
-        "fields": ["CSE", "Mechanical Engineering", "ECE", "Electrical", "Civil"]
+        "fields": ["CSE", "Mechanical Engineering", "ECE", "Electrical", "Civil"],
+        "lat": 10.7589,
+        "lon": 78.8132
     },
     {
         "name": "BIT Mesra",
@@ -43,7 +47,9 @@ COLLEGES = [
         "avg_package": "12.0 LPA",
         "placement_rate": 88,
         "reputation": "High Merit",
-        "fields": ["CSE", "Mechanical Engineering", "ECE", "Electrical", "Civil"]
+        "fields": ["CSE", "Mechanical Engineering", "ECE", "Electrical", "Civil"],
+        "lat": 23.4123,
+        "lon": 85.4399
     },
     {
         "name": "DTU Delhi",
@@ -52,7 +58,9 @@ COLLEGES = [
         "avg_package": "15.5 LPA",
         "placement_rate": 91,
         "reputation": "Premier State",
-        "fields": ["CSE", "Mechanical Engineering", "ECE", "Electrical"]
+        "fields": ["CSE", "Mechanical Engineering", "ECE", "Electrical"],
+        "lat": 28.7501,
+        "lon": 77.1177
     }
 ]
 
