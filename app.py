@@ -6,7 +6,7 @@ import os
 import certifi
 
 app = Flask(__name__)
-app.secret_key = 'super-secure-key-123'
+app.secret_key = os.environ.get('SECRET_KEY')
 
 @app.before_request
 def get_real_ip():
@@ -19,7 +19,7 @@ def get_real_ip():
 
 # MongoDB Setup
 try:
-    mongo_uri = os.environ.get('MONGO_URI', 'mongodb://localhost:27017/')
+    mongo_uri = os.environ.get('MONGO_URI')
     client = MongoClient(mongo_uri, serverSelectionTimeoutMS=5000, tlsCAFile=certifi.where())
     db = client['college_app']
     users_collection = db['users']
