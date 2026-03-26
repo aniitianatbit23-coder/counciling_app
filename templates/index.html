@@ -18,6 +18,12 @@
 
     <nav>
         <div class="logo">NexGen <span>Counsel</span></div>
+        {% if user %}
+        <div class="user-info" style="display: flex; align-items: center; gap: 15px;">
+            <span style="font-weight: 600; color: var(--text-dim);">Hi, {{ user.name.split(' ')[0] }}</span>
+            <a href="{{ url_for('logout') }}" class="btn-text" style="color: var(--accent); text-decoration: none;">Logout</a>
+        </div>
+        {% endif %}
     </nav>
 
     <main id="app-container">
