@@ -23,12 +23,15 @@ _mongo_client = None
 users_collection = None
 colleges_collection = None
 
+_conn_error = None
+
 def get_db():
-    global _mongo_client, users_collection, colleges_collection
+    global _mongo_client, users_collection, colleges_collection, _conn_error
     if _mongo_client is not None:
         return True
     if not mongo_uri:
-        print("ERROR: MONGO_URI environment variable is missing!")
+        _conn_error = "MONGO_URI environment variable is missing!"
+        print("ERROR:", _conn_error)
         return False
     try:
         _mongo_client = MongoClient(mongo_uri, serverSelectionTimeoutMS=5000, tlsCAFile=certifi.where())
@@ -75,10 +78,20 @@ def get_db():
         print("MongoDB connected successfully!")
         return True
     except Exception as e:
+        _conn_error = str(e)
         print(f"MongoDB Connection Error: {e}")
         return False
 
 
+
+@app.route('/debug')
+def debug():
+    get_db()
+    return jsonify({
+        "mongo_uri_set": bool(mongo_uri),
+        "connected": _mongo_client is not None,
+        "error": _conn_error
+    })
 
 @app.route('/')
 def index():
