@@ -18,12 +18,21 @@ def get_real_ip():
     print(f"Real Public IP: {ip} | Path: {request.path} | Time: {datetime.now()}")
 
 # MongoDB Setup
+mongo_uri = os.environ.get('MONGO_URI')
+users_collection = None
+colleges_collection = None
+
 try:
-    mongo_uri = os.environ.get('MONGO_URI')
+    if not mongo_uri:
+        raise ValueError("MONGO_URI environment variable is missing!")
+        
     client = MongoClient(mongo_uri, serverSelectionTimeoutMS=5000, tlsCAFile=certifi.where())
     db = client['college_app']
     users_collection = db['users']
     colleges_collection = db['colleges']
+    
+    # Test connection immediately
+    client.admin.command('ping')
     
     # Initialize DB with Colleges if empty
     if colleges_collection.count_documents({}) == 0:
