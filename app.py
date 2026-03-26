@@ -3,6 +3,7 @@ from datetime import datetime
 from pymongo import MongoClient
 from werkzeug.security import generate_password_hash, check_password_hash
 import os
+import certifi
 
 app = Flask(__name__)
 app.secret_key = 'super-secure-key-123'
@@ -19,7 +20,7 @@ def get_real_ip():
 # MongoDB Setup
 try:
     mongo_uri = os.environ.get('MONGO_URI', 'mongodb://localhost:27017/')
-    client = MongoClient(mongo_uri, serverSelectionTimeoutMS=2000)
+    client = MongoClient(mongo_uri, serverSelectionTimeoutMS=5000, tlsCAFile=certifi.where())
     db = client['college_app']
     users_collection = db['users']
     colleges_collection = db['colleges']
