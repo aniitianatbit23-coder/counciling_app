@@ -18,7 +18,7 @@ def get_real_ip():
     print(f"Real Public IP: {ip} | Path: {request.path} | Time: {datetime.now()}")
 
 # MongoDB Lazy Connection
-mongo_uri = os.environ.get('MONGO_URI')
+mongo_uri = os.environ.get('MONGO_URI', '').strip()
 _mongo_client = None
 users_collection = None
 colleges_collection = None
