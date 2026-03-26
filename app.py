@@ -82,6 +82,8 @@ def index():
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
+        if users_collection is None:
+            return render_template('login.html', error="Database unavailable. Please try again later.")
         email = request.form.get('email')
         password = request.form.get('password')
         
@@ -97,6 +99,8 @@ def login():
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     if request.method == 'POST':
+        if users_collection is None:
+            return render_template('login.html', register_error="Database unavailable. Please try again later.", mode='register')
         name = request.form.get('name')
         email = request.form.get('email')
         password = request.form.get('password')
@@ -119,7 +123,8 @@ def logout():
 
 @app.route('/api/colleges', methods=['GET'])
 def get_colleges():
-    # Fetch from Mongo, exclude _id since JS can't easily parse ObjectId without string conversion
+    if colleges_collection is None:
+        return jsonify({"error": "Database unavailable"}), 503
     colleges = list(colleges_collection.find({}, {"_id": 0}))
     return jsonify(colleges)
 
